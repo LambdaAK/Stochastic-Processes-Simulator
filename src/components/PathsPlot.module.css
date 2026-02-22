@@ -4,6 +4,7 @@
   border-radius: var(--radius);
   padding: 1rem;
   min-height: 340px;
+  box-shadow: var(--shadow);
 }
 
 .hint {
@@ -21,4 +22,5 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text-muted);
+  box-shadow: var(--shadow);
 }

@@ -85,7 +85,7 @@ export function StatsPlot({ stats, x0: _x0 }: Props) {
             stackId="band"
             stroke="none"
             fill="var(--accent)"
-            fillOpacity={0.2}
+            fillOpacity={0.18}
           />
           <Line
             type="monotone"
