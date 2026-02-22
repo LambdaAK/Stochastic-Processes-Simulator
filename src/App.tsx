@@ -87,8 +87,10 @@ export default function App() {
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Drift</h1>
-        <p className={styles.tagline}>Stochastic differential equations — simulate paths, view statistics</p>
+        <h1 className={styles.title}>Stochastic Processes Simulator</h1>
+        <p className={styles.tagline}>
+          Stochastic differential equations — simulate paths, view statistics
+        </p>
       </header>
 
       <main className={styles.main}>
