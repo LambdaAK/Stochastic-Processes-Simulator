@@ -13,6 +13,38 @@ export function sampleOne(
       return dist.mean + dist.std * normal(rand)
     case 'uniform':
       return dist.min + (dist.max - dist.min) * rand()
+    case 'exponential': {
+      const u = rand()
+      return u <= 0 || u >= 1 ? sampleOne(dist, rand) : -Math.log(u) / dist.lambda
+    }
+    case 'poisson': {
+      const L = Math.exp(-dist.lambda)
+      let k = 0
+      let p = 1
+      do {
+        k++
+        p *= rand()
+      } while (p > L)
+      return k - 1
+    }
+    case 'beta': {
+      const a = Math.floor(dist.alpha)
+      const b = Math.floor(dist.beta)
+      if (a < 1 || b < 1) return 0
+      let sumA = 0
+      let sumB = 0
+      for (let i = 0; i < a; i++) {
+        let u = rand()
+        while (u <= 0 || u >= 1) u = rand()
+        sumA += -Math.log(u)
+      }
+      for (let i = 0; i < b; i++) {
+        let u = rand()
+        while (u <= 0 || u >= 1) u = rand()
+        sumB += -Math.log(u)
+      }
+      return sumA / (sumA + sumB)
+    }
     default:
       return 0
   }
@@ -27,6 +59,15 @@ export function theoreticalMean(dist: LLNDistribution): number {
       return dist.mean
     case 'uniform':
       return (dist.min + dist.max) / 2
+    case 'exponential':
+      return 1 / dist.lambda
+    case 'poisson':
+      return dist.lambda
+    case 'beta': {
+      const a = Math.max(1, Math.floor(dist.alpha))
+      const b = Math.max(1, Math.floor(dist.beta))
+      return a / (a + b)
+    }
     default:
       return 0
   }

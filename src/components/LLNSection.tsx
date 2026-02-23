@@ -28,6 +28,9 @@ const DISTRIBUTION_OPTIONS: { id: LLNDistribution['type']; label: string }[] = [
   { id: 'bernoulli', label: 'Bernoulli(p)' },
   { id: 'gaussian', label: 'Gaussian(μ, σ)' },
   { id: 'uniform', label: 'Uniform(a, b)' },
+  { id: 'exponential', label: 'Exponential(λ)' },
+  { id: 'poisson', label: 'Poisson(λ)' },
+  { id: 'beta', label: 'Beta(α, β)' },
 ]
 
 function getDefaultDistribution(type: LLNDistribution['type']): LLNDistribution {
@@ -38,6 +41,12 @@ function getDefaultDistribution(type: LLNDistribution['type']): LLNDistribution 
       return { type: 'gaussian', mean: 0, std: 1 }
     case 'uniform':
       return { type: 'uniform', min: 0, max: 1 }
+    case 'exponential':
+      return { type: 'exponential', lambda: 1 }
+    case 'poisson':
+      return { type: 'poisson', lambda: 3 }
+    case 'beta':
+      return { type: 'beta', alpha: 2, beta: 5 }
     default:
       return { type: 'bernoulli', p: 0.5 }
   }
@@ -177,6 +186,64 @@ export function LLNSection() {
                   value={distribution.max}
                   onChange={(e) =>
                     setDistribution({ ...distribution, max: Number(e.target.value) || 1 })
+                  }
+                  className={styles.input}
+                />
+              </label>
+            </>
+          )}
+          {distribution.type === 'exponential' && (
+            <label className={styles.fieldLabel}>
+              <span>λ (rate)</span>
+              <input
+                type="number"
+                min={0.01}
+                step={0.1}
+                value={distribution.lambda}
+                onChange={(e) =>
+                  setDistribution({ ...distribution, lambda: Number(e.target.value) || 0.01 })
+                }
+                className={styles.input}
+              />
+            </label>
+          )}
+          {distribution.type === 'poisson' && (
+            <label className={styles.fieldLabel}>
+              <span>λ (mean)</span>
+              <input
+                type="number"
+                min={0.01}
+                step={0.1}
+                value={distribution.lambda}
+                onChange={(e) =>
+                  setDistribution({ ...distribution, lambda: Number(e.target.value) || 0.01 })
+                }
+                className={styles.input}
+              />
+            </label>
+          )}
+          {distribution.type === 'beta' && (
+            <>
+              <label className={styles.fieldLabel}>
+                <span>α</span>
+                <input
+                  type="number"
+                  min={1}
+                  value={distribution.alpha}
+                  onChange={(e) =>
+                    setDistribution({ ...distribution, alpha: Math.max(1, Number(e.target.value) || 1) })
+                  }
+                  className={styles.input}
+                />
+              </label>
+              <label className={styles.fieldLabel}>
+                <span>β</span>
+                <input
+                  type="number"
+                  min={1}
+                  value={distribution.beta}
+                  onChange={(e) =>
+                    setDistribution({ ...distribution, beta: Math.max(1, Number(e.target.value) || 1) })
                   }
                   className={styles.input}
                 />
