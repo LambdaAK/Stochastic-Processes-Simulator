@@ -1,7 +1,7 @@
 import styles from './TitlePage.module.css'
 
 type Props = {
-  onSelect: (section: 'stochastic-pde' | 'markov-chain') => void
+  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc') => void
 }
 
 export function TitlePage({ onSelect }: Props) {
@@ -32,7 +32,17 @@ export function TitlePage({ onSelect }: Props) {
         >
           <span className={styles.cardTitle}>Markov Chain</span>
           <span className={styles.cardDesc}>
-            Discrete-time Markov chains and stationary distributions (coming soon)
+            Discrete-time Markov chains with empirical trials and theoretical distributions
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.card}
+          onClick={() => onSelect('ctmc')}
+        >
+          <span className={styles.cardTitle}>CTMC</span>
+          <span className={styles.cardDesc}>
+            Continuous-time Markov chains with exponential holding times and rate matrices
           </span>
         </button>
       </div>
