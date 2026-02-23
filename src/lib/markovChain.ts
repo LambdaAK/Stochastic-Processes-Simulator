@@ -1,7 +1,10 @@
 import type { MarkovChainDef, MarkovParseResult, MarkovTransition } from '@/types/markov'
 
 /**
- * Parse a Markov chain DSL.
+ * Markov chain utilities. Convention: transition matrix P acts on the left;
+ * distributions are column vectors, so stationary distribution π satisfies Pπ = π.
+ *
+ * Parse a Markov chain DSL:
  *
  * Section 1: States: A, B, C, ...
  * Section 2: Initial distribution: A : 0.5, B : 0.3, C : 0.2   (or "uniform")
@@ -164,6 +167,41 @@ export function parseMarkovDSL(text: string): MarkovParseResult {
   }
 
   return { ok: true, chain: { states, initialDistribution, transitions } }
+}
+
+/**
+ * Check if the chain is irreducible (every state communicates with every other state).
+ * Equivalently, the directed graph with an edge i → j when P(i,j) > 0 is strongly connected.
+ */
+export function isIrreducible(chain: MarkovChainDef): boolean {
+  const n = chain.states.length
+  if (n <= 1) return true
+  const P: Record<string, Record<string, number>> = {}
+  for (const from of chain.states) {
+    P[from] = {}
+    for (const to of chain.states) P[from][to] = 0
+  }
+  for (const t of chain.transitions) {
+    P[t.from][t.to] = (P[t.from][t.to] ?? 0) + t.p
+  }
+  const successors = (s: string): string[] =>
+    chain.states.filter((j) => P[s][j] > 0)
+  for (const start of chain.states) {
+    const visited = new Set<string>()
+    const queue: string[] = [start]
+    visited.add(start)
+    while (queue.length > 0) {
+      const u = queue.shift()!
+      for (const v of successors(u)) {
+        if (!visited.has(v)) {
+          visited.add(v)
+          queue.push(v)
+        }
+      }
+    }
+    if (visited.size !== n) return false
+  }
+  return true
 }
 
 /** From each state, cumulative probabilities and next-state list for sampling. */

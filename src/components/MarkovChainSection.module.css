@@ -74,6 +74,100 @@
   background: var(--accent-dim);
 }
 
+.graphBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.graphTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.matrixBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.propertiesBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.propertiesTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.propertyLine {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.propertyYes {
+  color: var(--success, #22c55e);
+}
+
+.propertyNo {
+  color: var(--text-muted);
+}
+
+.matrixTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.matrixHint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.matrixWrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.matrixTable {
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.matrixCorner,
+.matrixHeader,
+.matrixRowHeader {
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.matrixCorner {
+  background: var(--bg-elevated);
+}
+
+.matrixCell {
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  min-width: 2.5rem;
+}
+
 .optionsBlock {
   display: flex;
   flex-direction: column;
@@ -173,19 +267,6 @@
 .chartTitle {
   margin: 0;
   font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.graphBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.graphTitle {
-  margin: 0;
-  font-size: 1rem;
   font-weight: 600;
   color: var(--text);
 }

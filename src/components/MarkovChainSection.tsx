@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts'
-import { parseMarkovDSL, runSimulation, type SimulateResult } from '@/lib/markovChain'
+import { parseMarkovDSL, runSimulation, isIrreducible, type SimulateResult } from '@/lib/markovChain'
 import { createSeededRng } from '@/lib/random'
 import type { MarkovChainDef } from '@/types/markov'
 import { MarkovChainGraph } from '@/components/MarkovChainGraph'
@@ -67,6 +67,19 @@ export function MarkovChainSection() {
     }, 0)
   }
 
+  const transitionMatrix = useMemo(() => {
+    if (!chain) return null
+    const P: Record<string, Record<string, number>> = {}
+    for (const from of chain.states) {
+      P[from] = {}
+      for (const to of chain.states) P[from][to] = 0
+    }
+    for (const t of chain.transitions) {
+      P[t.from][t.to] = (P[t.from][t.to] ?? 0) + t.p
+    }
+    return P
+  }, [chain])
+
   const chartData = useMemo(() => {
     if (!simResult || !chain) return []
     return simResult.t.map((t, i) => {
@@ -106,6 +119,55 @@ export function MarkovChainSection() {
           <div className={styles.graphBlock}>
             <h3 className={styles.graphTitle}>Transition graph</h3>
             <MarkovChainGraph chain={chain} />
+          </div>
+
+          {transitionMatrix && (
+            <div className={styles.matrixBlock}>
+              <h3 className={styles.matrixTitle}>Transition matrix P</h3>
+              <p className={styles.matrixHint}>P(i, j) = probability of moving from state i to state j</p>
+              <div className={styles.matrixWrap}>
+                <table className={styles.matrixTable}>
+                  <thead>
+                    <tr>
+                      <th className={styles.matrixCorner}></th>
+                      {chain.states.map((s) => (
+                        <th key={s} className={styles.matrixHeader}>
+                          {s}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {chain.states.map((from) => (
+                      <tr key={from}>
+                        <th className={styles.matrixRowHeader}>{from}</th>
+                        {chain.states.map((to) => (
+                          <td key={to} className={styles.matrixCell}>
+                            {transitionMatrix[from][to] === 0
+                              ? '0'
+                              : transitionMatrix[from][to] === 1
+                                ? '1'
+                                : transitionMatrix[from][to].toFixed(3)}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          <div className={styles.propertiesBlock}>
+            <h3 className={styles.propertiesTitle}>Properties</h3>
+            <p className={styles.propertyLine}>
+              <strong>Irreducible:</strong>{' '}
+              {isIrreducible(chain) ? (
+                <span className={styles.propertyYes}>Yes</span>
+              ) : (
+                <span className={styles.propertyNo}>No</span>
+              )}
+            </p>
           </div>
 
           <div className={styles.optionsBlock}>
