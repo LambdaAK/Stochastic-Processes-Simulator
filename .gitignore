@@ -19,5 +19,7 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Design (internal)
+# Design / workflow (internal)
 DESIGN.md
+tasks/
+CLAUDE.md
