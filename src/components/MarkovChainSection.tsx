@@ -142,7 +142,11 @@ export function MarkovChainSection() {
     <div className={styles.section}>
       <div className={styles.intro}>
         <p className={styles.introText}>
-          A <strong>Markov chain</strong> is a discrete-time stochastic process over a finite set of states. At each step the process moves from its current state to another (or stays put) according to fixed transition probabilities. The key property is the <strong>Markov property</strong>: the probability of the next state depends only on the current state, not on how the process got there. You specify the states, an initial distribution over them, and the transition probabilities; below you can simulate paths, view the transition graph and matrix, and compute the probability of being in each state over time.
+          A <strong>Markov chain</strong> is a discrete-time stochastic process over a finite set of states. At each step the process moves from its current state to another (or stays put) according to fixed transition probabilities. The key property is the <strong>Markov property</strong>: the probability of the next state depends only on the current state, not on how the process got there:
+        </p>
+        <p className={styles.introFormula} dangerouslySetInnerHTML={{ __html: renderLatex('\\mathbb{P}(X_{t+1} = j \\mid X_0, \\ldots, X_t) = \\mathbb{P}(X_{t+1} = j \\mid X_t) = P(X_t, j)', true) }} />
+        <p className={styles.introText}>
+          The transition matrix <span dangerouslySetInnerHTML={{ __html: renderLatex('P') }} /> has entries <span dangerouslySetInnerHTML={{ __html: renderLatex('P(i,j) = \\mathbb{P}(X_{t+1}\\!=\\!j \\mid X_t\\!=\\!i)') }} />, with rows summing to 1: <span dangerouslySetInnerHTML={{ __html: renderLatex('\\sum_j P(i,j) = 1') }} /> for each <span dangerouslySetInnerHTML={{ __html: renderLatex('i') }} />. You specify the states, an initial distribution <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu') }} />, and the transition probabilities; below you can simulate paths, view the graph and matrix, and compute the distribution over time.
         </p>
       </div>
       <div className={styles.editorBlock}>
@@ -176,7 +180,11 @@ export function MarkovChainSection() {
           {transitionMatrix && (
             <div className={styles.matrixBlock}>
               <h3 className={styles.matrixTitle}>Transition matrix P</h3>
-              <p className={styles.matrixHint}>P(i, j) = probability of moving from state i to state j</p>
+              <p className={styles.matrixHint}>
+                <span dangerouslySetInnerHTML={{ __html: renderLatex('P(i,j) = \\mathbb{P}(X_{t+1} = j \\mid X_t = i)') }} />
+                {' — each row sums to '}
+                <span dangerouslySetInnerHTML={{ __html: renderLatex('\\sum_{j} P(i,j) = 1') }} />
+              </p>
               <div className={styles.matrixWrap}>
                 <table className={styles.matrixTable}>
                   <thead>
@@ -216,14 +224,9 @@ export function MarkovChainSection() {
             <div className={styles.theoreticalBlock}>
               <h4 className={styles.simulateTitle}>Probability over time (theoretical)</h4>
               <p className={styles.theoreticalHint}>
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('P(X_t = s)') }} />
-                {' from initial distribution '}
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu') }} />
-                {' distribution at time '}
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('t') }} />
-                {' is '}
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('P^t \\mu') }} />
-                .
+                Let <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu') }} /> be the initial distribution (column vector). The distribution at time <span dangerouslySetInnerHTML={{ __html: renderLatex('t') }} /> is{' '}
+                <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu_t = P^t \\mu') }} />
+                , so <span dangerouslySetInnerHTML={{ __html: renderLatex('P(X_t = s) = (P^t \\mu)_s') }} />.
               </p>
               <div className={styles.theoreticalForm}>
                 <label className={styles.fieldLabel}>
@@ -301,7 +304,7 @@ export function MarkovChainSection() {
             <div className={styles.simulateBlock}>
               <h4 className={styles.simulateTitle}>Simulate</h4>
               <p className={styles.simulateHint}>
-                Sample trajectories and see the proportion of paths in each state over time.
+                Sample <span dangerouslySetInnerHTML={{ __html: renderLatex('M') }} /> trajectories of length <span dangerouslySetInnerHTML={{ __html: renderLatex('N') }} />. The proportion of paths in state <span dangerouslySetInnerHTML={{ __html: renderLatex('s') }} /> at time <span dangerouslySetInnerHTML={{ __html: renderLatex('t') }} /> estimates <span dangerouslySetInnerHTML={{ __html: renderLatex('P(X_t = s)') }} />; as <span dangerouslySetInnerHTML={{ __html: renderLatex('M \\to \\infty') }} /> it converges to the theoretical value.
               </p>
               <div className={styles.simulateForm}>
                 <label className={styles.fieldLabel}>
@@ -402,10 +405,15 @@ export function MarkovChainSection() {
                   </LineChart>
                 </ResponsiveContainer>
                 {stationaryDist != null && finalTvDistance != null && (
-                  <p className={styles.convergenceHint}>
-                    Total variation distance from final proportions to π: {finalTvDistance.toFixed(4)}
-                    {finalTvDistance < 0.05 && ' (close to stationary)'}
-                  </p>
+                  <div className={styles.convergenceHint}>
+                    <p className={styles.convergenceFormula}>
+                      <span dangerouslySetInnerHTML={{ __html: renderLatex('d_{\\mathrm{TV}}(\\hat{p}, \\pi) = \\frac{1}{2}\\sum_s |\\hat{p}(s) - \\pi(s)|') }} />
+                    </p>
+                    <p className={styles.convergenceValue}>
+                      Total variation (final proportions vs stationary <span dangerouslySetInnerHTML={{ __html: renderLatex('\\pi') }} />): {finalTvDistance.toFixed(4)}
+                      {finalTvDistance < 0.05 && ' (close to stationary)'}
+                    </p>
+                  </div>
                 )}
               </div>
             )}

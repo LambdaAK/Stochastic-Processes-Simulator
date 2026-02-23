@@ -26,8 +26,9 @@ export default function App() {
               type="button"
               className={styles.titleLink}
               onClick={() => setPage('home')}
+              aria-label="Home"
             >
-              Stochastic Processes Simulator
+              <img src="/logo.png" alt="dX" className={styles.headerLogo} />
             </button>
             <nav className={styles.nav} aria-label="Main">
               <button

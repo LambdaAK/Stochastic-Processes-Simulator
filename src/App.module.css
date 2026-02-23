@@ -69,16 +69,16 @@
   padding: 0;
   border: none;
   background: none;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -0.02em;
   cursor: pointer;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 
-.titleLink:hover {
-  color: var(--accent);
+.headerLogo {
+  display: block;
+  height: 36px;
+  width: auto;
+  object-fit: contain;
 }
 
 .footer {

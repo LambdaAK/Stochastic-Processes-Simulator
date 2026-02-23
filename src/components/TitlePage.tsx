@@ -11,9 +11,6 @@ export function TitlePage({ onSelect }: Props) {
         <img src="/logo.png" alt="dX logo" className={styles.logo} />
       </span>
       <h1 className={styles.title}>Stochastic Processes Simulator</h1>
-      <p className={styles.tagline}>
-        Simulate and explore stochastic differential equations and Markov chains
-      </p>
       <div className={styles.choices}>
         <button
           type="button"

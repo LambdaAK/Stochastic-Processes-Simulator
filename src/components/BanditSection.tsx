@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react'
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
 import {
   LineChart,
   Line,
@@ -20,6 +22,14 @@ import {
 import { createSeededRng } from '@/lib/random'
 import type { BanditProblem, AlgorithmConfig, SimulationResult } from '@/types/bandit'
 import styles from './MarkovChainSection.module.css'
+
+function renderLatex(latex: string, displayMode = false): string {
+  try {
+    return katex.renderToString(latex, { displayMode, throwOnError: false })
+  } catch {
+    return latex
+  }
+}
 
 const DEFAULT_DSL = `Arms: Slot1, Slot2, Slot3
 Slot1: Bernoulli(0.3)
@@ -164,6 +174,12 @@ export function BanditSection() {
 
   return (
     <div className={styles.section}>
+      <div className={styles.intro}>
+        <p className={styles.introText}>
+          In a <strong>multi-armed bandit</strong> there are <span dangerouslySetInnerHTML={{ __html: renderLatex('K') }} /> arms; each pull of arm <span dangerouslySetInnerHTML={{ __html: renderLatex('a') }} /> yields a reward from a distribution with mean <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu_a') }} />. The goal is to balance <strong>exploration</strong> (trying arms to learn) and <strong>exploitation</strong> (pulling the best arm). Let <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu^* = \\max_a \\mu_a') }} />. The <strong>regret</strong> after <span dangerouslySetInnerHTML={{ __html: renderLatex('T') }} /> pulls is{' '}
+          <span dangerouslySetInnerHTML={{ __html: renderLatex('R_T = T\\mu^* - \\sum_{t=1}^T r_t') }} />, the loss from not always pulling the optimal arm. Good algorithms (e.g. UCB, Thompson sampling) achieve sublinear regret.
+        </p>
+      </div>
       <div className={styles.editorBlock}>
         <label className={styles.label} htmlFor="bandit-dsl">
           Multi-Armed Bandit Problem
@@ -223,7 +239,7 @@ export function BanditSection() {
             </div>
             {optimalArmInfo && (
               <p className={styles.theoreticalHint}>
-                Optimal arm: <strong>{optimalArmInfo.name}</strong> (expected reward: {optimalArmInfo.reward.toFixed(3)})
+                Optimal arm: <strong>{optimalArmInfo.name}</strong> with <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu^* = ' + optimalArmInfo.reward.toFixed(3)) }} /> (expected reward).
               </p>
             )}
           </div>
@@ -405,7 +421,7 @@ export function BanditSection() {
                 <div className={styles.chartBlock}>
                   <h4 className={styles.chartTitle}>Regret Over Time</h4>
                   <p className={styles.theoreticalHint}>
-                    Regret = cumulative difference between optimal reward and actual reward
+                    <span dangerouslySetInnerHTML={{ __html: renderLatex('R_t = t\\mu^* - \\sum_{s=1}^t r_s') }} /> (cumulative loss vs. always pulling the optimal arm).
                   </p>
                   <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={regretChartData} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>

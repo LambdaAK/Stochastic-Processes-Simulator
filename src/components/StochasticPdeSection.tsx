@@ -1,4 +1,6 @@
 import { useState, useMemo, useCallback, useRef } from 'react'
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
 import type { ProcessDef, CustomProcessInput } from '@/types/process'
 import type { SimConfig, SimResult } from '@/types/simulation'
 import { ProcessPicker } from '@/components/ProcessPicker'
@@ -19,6 +21,14 @@ import {
   exportChartPng,
 } from '@/lib/export'
 import styles from './StochasticPdeSection.module.css'
+
+function renderLatex(latex: string, displayMode = false): string {
+  try {
+    return katex.renderToString(latex, { displayMode, throwOnError: false })
+  } catch {
+    return latex
+  }
+}
 
 const defaultCustomInput: CustomProcessInput = {
   driftExpr: 'theta * (mu - x)',
@@ -120,6 +130,16 @@ export function StochasticPdeSection() {
 
   return (
     <div className={styles.section}>
+      <div className={styles.intro}>
+        <p className={styles.introText}>
+          A <strong>stochastic differential equation (SDE)</strong> has the form{' '}
+          <span dangerouslySetInnerHTML={{ __html: renderLatex('dX_t = f(X_t)\\,dt + g(X_t)\\,dW_t') }} />
+          , where <span dangerouslySetInnerHTML={{ __html: renderLatex('W_t') }} /> is a Wiener process. Paths are simulated with the <strong>Euler–Maruyama</strong> scheme:{' '}
+          <span dangerouslySetInnerHTML={{ __html: renderLatex('X_{t+\\Delta t} = X_t + f(X_t)\\Delta t + g(X_t)\\sqrt{\\Delta t}\\,Z') }} />
+          with <span dangerouslySetInnerHTML={{ __html: renderLatex('Z \\sim \\mathcal{N}(0,1)') }} />. The probability density <span dangerouslySetInnerHTML={{ __html: renderLatex('p(x,t)') }} /> evolves according to the <strong>Fokker–Planck equation</strong>{' '}
+          <span dangerouslySetInnerHTML={{ __html: renderLatex('\\frac{\\partial p}{\\partial t} = -\\frac{\\partial}{\\partial x}[f\\,p] + \\frac{1}{2}\\frac{\\partial^2}{\\partial x^2}[g^2\\,p]') }} />.
+        </p>
+      </div>
       <div className={styles.controls}>
         <ProcessPicker
           mode={mode}

@@ -140,6 +140,14 @@ export function CtmcSection() {
 
   return (
     <div className={styles.section}>
+      <div className={styles.intro}>
+        <p className={styles.introText}>
+          A <strong>continuous-time Markov chain (CTMC)</strong> spends a random holding time in each state, then jumps to another. The holding time in state <span dangerouslySetInnerHTML={{ __html: renderLatex('i') }} /> is exponential with rate <span dangerouslySetInnerHTML={{ __html: renderLatex('-Q_{ii}') }} />. The <strong>rate matrix</strong>{' '}
+          <span dangerouslySetInnerHTML={{ __html: renderLatex('Q') }} /> has <span dangerouslySetInnerHTML={{ __html: renderLatex('Q(i,j) \\geq 0') }} /> for <span dangerouslySetInnerHTML={{ __html: renderLatex('i \\neq j') }} /> and <span dangerouslySetInnerHTML={{ __html: renderLatex('Q(i,i) = -\\sum_{j \\neq i} Q(i,j)') }} />. The distribution at time <span dangerouslySetInnerHTML={{ __html: renderLatex('t') }} /> is{' '}
+          <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu_t = e^{Qt}\\mu') }} /> (matrix exponential), satisfying the <strong>Kolmogorov forward equation</strong>{' '}
+          <span dangerouslySetInnerHTML={{ __html: renderLatex('\\frac{d}{dt}P(t) = P(t)Q') }} />.
+        </p>
+      </div>
       <div className={styles.editorBlock}>
         <label className={styles.label} htmlFor="ctmc-dsl">
           Continuous-time Markov chain definition
@@ -172,7 +180,8 @@ export function CtmcSection() {
             <div className={styles.matrixBlock}>
               <h3 className={styles.matrixTitle}>Rate matrix Q</h3>
               <p className={styles.matrixHint}>
-                Q(i, j) = rate of transition from i to j (i≠j); Q(i, i) = −sum of outgoing rates
+                <span dangerouslySetInnerHTML={{ __html: renderLatex('Q(i,j)') }} /> = rate from <span dangerouslySetInnerHTML={{ __html: renderLatex('i') }} /> to <span dangerouslySetInnerHTML={{ __html: renderLatex('j') }} /> for <span dangerouslySetInnerHTML={{ __html: renderLatex('i \\neq j') }} />;{' '}
+                <span dangerouslySetInnerHTML={{ __html: renderLatex('Q(i,i) = -\\sum_{j \\neq i} Q(i,j)') }} />
               </p>
               <div className={styles.matrixWrap}>
                 <table className={styles.matrixTable}>
@@ -216,14 +225,9 @@ export function CtmcSection() {
             <div className={styles.theoreticalBlock}>
               <h4 className={styles.simulateTitle}>Probability over time (theoretical)</h4>
               <p className={styles.theoreticalHint}>
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('P(X(t) = s)') }} />
-                {' from initial distribution '}
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu') }} />
-                {': distribution at time '}
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('t') }} />
-                {' is '}
-                <span dangerouslySetInnerHTML={{ __html: renderLatex('e^{Qt} \\mu') }} />
-                .
+                Initial distribution <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu') }} /> (column vector). Distribution at time <span dangerouslySetInnerHTML={{ __html: renderLatex('t') }} /> is{' '}
+                <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mu_t = e^{Qt}\\mu') }} />
+                , so <span dangerouslySetInnerHTML={{ __html: renderLatex('P(X(t) = s) = (e^{Qt}\\mu)_s') }} /> (matrix exponential).
               </p>
               <div className={styles.theoreticalForm}>
                 <label className={styles.fieldLabel}>
@@ -312,7 +316,7 @@ export function CtmcSection() {
             <div className={styles.simulateBlock}>
               <h4 className={styles.simulateTitle}>Simulate</h4>
               <p className={styles.simulateHint}>
-                Sample trajectories using exponential holding times and see the proportion in each state over time.
+                Sample trajectories: in state <span dangerouslySetInnerHTML={{ __html: renderLatex('i') }} />, hold for <span dangerouslySetInnerHTML={{ __html: renderLatex('\\mathrm{Exp}(-Q_{ii})') }} /> then jump to <span dangerouslySetInnerHTML={{ __html: renderLatex('j') }} /> with probability proportional to <span dangerouslySetInnerHTML={{ __html: renderLatex('Q(i,j)') }} />. Proportions estimate <span dangerouslySetInnerHTML={{ __html: renderLatex('P(X(t)=s)') }} />.
               </p>
               <div className={styles.simulateForm}>
                 <label className={styles.fieldLabel}>
@@ -424,10 +428,15 @@ export function CtmcSection() {
                   </LineChart>
                 </ResponsiveContainer>
                 {stationaryDist != null && finalTvDistance != null && (
-                  <p className={styles.convergenceHint}>
-                    Total variation distance from final proportions to π: {finalTvDistance.toFixed(4)}
-                    {finalTvDistance < 0.05 && ' (close to stationary)'}
-                  </p>
+                  <div className={styles.convergenceHint}>
+                    <p className={styles.convergenceFormula}>
+                      <span dangerouslySetInnerHTML={{ __html: renderLatex('d_{\\mathrm{TV}}(\\hat{p}, \\pi) = \\frac{1}{2}\\sum_s |\\hat{p}(s) - \\pi(s)|') }} />
+                    </p>
+                    <p className={styles.convergenceValue}>
+                      Total variation (final vs stationary <span dangerouslySetInnerHTML={{ __html: renderLatex('\\pi') }} />): {finalTvDistance.toFixed(4)}
+                      {finalTvDistance < 0.05 && ' (close to stationary)'}
+                    </p>
+                  </div>
                 )}
               </div>
             )}

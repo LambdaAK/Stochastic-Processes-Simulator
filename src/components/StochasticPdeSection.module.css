@@ -4,6 +4,25 @@
   gap: 1.5rem;
 }
 
+.intro {
+  max-width: 720px;
+}
+
+.introText {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.introText strong {
+  color: var(--text);
+}
+
+.introText .katex {
+  font-size: 1em;
+}
+
 .controls {
   display: grid;
   grid-template-columns: 1fr 1fr;
