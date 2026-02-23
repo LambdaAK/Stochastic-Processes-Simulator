@@ -1,7 +1,7 @@
 import styles from './TitlePage.module.css'
 
 type Props = {
-  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc') => void
+  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit') => void
 }
 
 export function TitlePage({ onSelect }: Props) {
@@ -43,6 +43,16 @@ export function TitlePage({ onSelect }: Props) {
           <span className={styles.cardTitle}>CTMC</span>
           <span className={styles.cardDesc}>
             Continuous-time Markov chains with exponential holding times and rate matrices
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.card}
+          onClick={() => onSelect('bandit')}
+        >
+          <span className={styles.cardTitle}>Multi-Armed Bandits</span>
+          <span className={styles.cardDesc}>
+            Compare exploration strategies: ε-greedy, UCB, Thompson Sampling. Visualize regret over time
           </span>
         </button>
       </div>

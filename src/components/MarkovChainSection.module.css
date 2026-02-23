@@ -5,6 +5,21 @@
   padding: 0.5rem 0;
 }
 
+.intro {
+  max-width: 640px;
+}
+
+.introText {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.introText strong {
+  color: var(--text);
+}
+
 .editorBlock {
   display: flex;
   flex-direction: column;

@@ -140,6 +140,11 @@ export function MarkovChainSection() {
 
   return (
     <div className={styles.section}>
+      <div className={styles.intro}>
+        <p className={styles.introText}>
+          A <strong>Markov chain</strong> is a discrete-time stochastic process over a finite set of states. At each step the process moves from its current state to another (or stays put) according to fixed transition probabilities. The key property is the <strong>Markov property</strong>: the probability of the next state depends only on the current state, not on how the process got there. You specify the states, an initial distribution over them, and the transition probabilities; below you can simulate paths, view the transition graph and matrix, and compute the probability of being in each state over time.
+        </p>
+      </div>
       <div className={styles.editorBlock}>
         <label className={styles.label} htmlFor="markov-dsl">
           Markov chain definition
