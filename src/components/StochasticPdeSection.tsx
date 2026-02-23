@@ -234,6 +234,9 @@ export function StochasticPdeSection() {
         {resultTab === 'paths' && (
           <section className={styles.resultSection}>
             <h2 className={styles.resultHeading}>Paths</h2>
+            <p className={styles.graphDesc}>
+              Sample trajectories of the SDE: each curve is one path <span dangerouslySetInnerHTML={{ __html: renderLatex('X_t') }} /> simulated with Euler–Maruyama from <span dangerouslySetInnerHTML={{ __html: renderLatex('t_0') }} /> to <span dangerouslySetInnerHTML={{ __html: renderLatex('T') }} />. Up to 150 paths are drawn for clarity.
+            </p>
             <PathsPlot
               paths={result?.paths ?? []}
               x0={x0}
@@ -244,6 +247,9 @@ export function StochasticPdeSection() {
         {resultTab === 'statistics' && (
           <section className={styles.resultSection}>
             <h2 className={styles.resultHeading}>Statistics</h2>
+            <p className={styles.graphDesc}>
+              Empirical mean and mean ± 2 standard deviations across all paths at each time. The band shows how the distribution of <span dangerouslySetInnerHTML={{ __html: renderLatex('X_t') }} /> spreads as <span dangerouslySetInnerHTML={{ __html: renderLatex('t') }} /> increases.
+            </p>
             <StatsPlot
               stats={stats}
               x0={x0}
@@ -254,6 +260,9 @@ export function StochasticPdeSection() {
         {resultTab === 'solutions' && (
           <section className={styles.resultSection}>
             <h2 className={styles.resultHeading}>Solutions</h2>
+            <p className={styles.graphDesc}>
+              Compares the simulated mean (and ±2σ band) from the paths with the theoretical mean and standard deviation for this process, when a closed-form solution exists. Theory is shown as dashed lines; simulation as solid.
+            </p>
             <SolutionsPanel
               processId={currentProcess?.id ?? ''}
               params={params}
@@ -268,6 +277,9 @@ export function StochasticPdeSection() {
         {resultTab === 'density' && (
           <section className={styles.resultSection}>
             <h2 className={styles.resultHeading}>Density p(x, t)</h2>
+            <p className={styles.graphDesc}>
+              Solution of the Fokker–Planck equation for the probability density <span dangerouslySetInnerHTML={{ __html: renderLatex('p(x,t)') }} />. The curve shows <span dangerouslySetInnerHTML={{ __html: renderLatex('p(x,t)') }} /> at the time selected by the slider; move it to see how the density evolves from the initial condition.
+            </p>
             {currentProcess ? (
               <DensityPanel
                 process={currentProcess}

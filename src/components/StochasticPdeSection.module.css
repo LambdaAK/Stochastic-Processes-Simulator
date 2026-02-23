@@ -115,6 +115,14 @@ I.section {
   color: var(--text-muted);
 }
 
+.graphDesc {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 640px;
+}
+
 .emptyState {
   padding: 2rem;
   text-align: center;
