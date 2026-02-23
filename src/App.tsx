@@ -14,9 +14,28 @@ import { DBSCANSection } from '@/components/DBSCANSection'
 import { PendulumSection } from '@/components/PendulumSection'
 import { KNNSection } from '@/components/KNNSection'
 import { DecisionTreeSection } from '@/components/DecisionTreeSection'
+import { BaggingSection } from '@/components/BaggingSection'
+import { BoostingSection } from '@/components/BoostingSection'
 import styles from './App.module.css'
 
-export type AppPage = 'home' | 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'pendulum' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'dbscan' | 'knn' | 'decision-tree'
+export type AppPage =
+  | 'home'
+  | 'stochastic-pde'
+  | 'markov-chain'
+  | 'ctmc'
+  | 'bandit'
+  | 'lln'
+  | 'clt'
+  | 'rl'
+  | 'pendulum'
+  | 'linear-regression'
+  | 'logistic-regression'
+  | 'kmeans'
+  | 'dbscan'
+  | 'knn'
+  | 'decision-tree'
+  | 'bagging'
+  | 'boosting'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -139,6 +158,20 @@ export default function App() {
               >
                 Decision tree
               </button>
+              <button
+                type="button"
+                className={page === 'bagging' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('bagging')}
+              >
+                Bagging
+              </button>
+              <button
+                type="button"
+                className={page === 'boosting' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('boosting')}
+              >
+                Boosting
+              </button>
             </nav>
           </header>
           <main className={styles.main}>
@@ -156,6 +189,8 @@ export default function App() {
             {page === 'dbscan' && <DBSCANSection />}
             {page === 'knn' && <KNNSection />}
             {page === 'decision-tree' && <DecisionTreeSection />}
+            {page === 'bagging' && <BaggingSection />}
+            {page === 'boosting' && <BoostingSection />}
           </main>
         </>
       )}

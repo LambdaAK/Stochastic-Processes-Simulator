@@ -1,7 +1,25 @@
 import styles from './TitlePage.module.css'
 
 type Props = {
-  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'pendulum' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'dbscan' | 'knn' | 'decision-tree') => void
+  onSelect: (
+    section:
+      | 'stochastic-pde'
+      | 'markov-chain'
+      | 'ctmc'
+      | 'bandit'
+      | 'lln'
+      | 'clt'
+      | 'rl'
+      | 'pendulum'
+      | 'linear-regression'
+      | 'logistic-regression'
+      | 'kmeans'
+      | 'dbscan'
+      | 'knn'
+      | 'decision-tree'
+      | 'bagging'
+      | 'boosting'
+  ) => void
 }
 
 export function TitlePage({ onSelect }: Props) {
@@ -148,6 +166,26 @@ export function TitlePage({ onSelect }: Props) {
               <span className={styles.cardTitle}>Decision tree</span>
               <span className={styles.cardDesc}>
                 CART trees (Gini split). Add or paste x,y,label data; view the tree and decision boundary
+              </span>
+            </button>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('bagging')}
+            >
+              <span className={styles.cardTitle}>Bagging (trees)</span>
+              <span className={styles.cardDesc}>
+                Ensemble of decision trees trained on bootstrap samples. Compare the bagged decision boundary to a single tree
+              </span>
+            </button>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('boosting')}
+            >
+              <span className={styles.cardTitle}>Boosting (trees)</span>
+              <span className={styles.cardDesc}>
+                Sequential ensemble of decision trees; each tree focuses on previous errors. AdaBoost-style weighted vote and decision boundary
               </span>
             </button>
           </div>
