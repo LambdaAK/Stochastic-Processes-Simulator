@@ -30,9 +30,9 @@
 .resultTab,
 .resultTabActive {
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--bg-input);
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
   color: var(--text-muted);
   cursor: pointer;
   font-weight: 500;
@@ -100,7 +100,10 @@
   padding: 2rem;
   text-align: center;
   color: var(--text-muted);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
 }

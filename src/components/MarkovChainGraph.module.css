@@ -3,10 +3,13 @@
   max-width: 480px;
   aspect-ratio: 1;
   margin: 0 auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--bg-elevated);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--glass-shadow);
 }
 
 .svg {

@@ -42,17 +42,19 @@
   padding: 1.5rem 1.75rem;
   min-width: 260px;
   max-width: 300px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
 }
 
 .card:hover {
   border-color: var(--accent);
-  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.15);
+  box-shadow: var(--glass-shadow-hover), 0 0 0 1px rgba(234, 88, 12, 0.2);
   transform: translateY(-2px);
 }
 

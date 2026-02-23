@@ -10,6 +10,13 @@
   flex-direction: column;
   gap: 0.5rem;
   max-width: 560px;
+  padding: 1.25rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
 }
 
 .label {
@@ -78,6 +85,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding: 1.25rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
 }
 
 .graphTitle {
@@ -91,12 +105,26 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  padding: 1.25rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
 }
 
 .propertiesBlock {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  padding: 1.25rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
 }
 
 .propertiesTitle {
@@ -171,9 +199,14 @@
 .optionsBlock {
   display: flex;
   flex-direction: column;
+  padding: 1.25rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
   gap: 1rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
 }
 
 .optionsTitle {
