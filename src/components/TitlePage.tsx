@@ -7,6 +7,9 @@ type Props = {
 export function TitlePage({ onSelect }: Props) {
   return (
     <div className={styles.page}>
+      <span className={styles.logoWrap}>
+        <img src="/logo.png" alt="dX logo" className={styles.logo} />
+      </span>
       <h1 className={styles.title}>Stochastic Processes Simulator</h1>
       <p className={styles.tagline}>
         Simulate and explore stochastic differential equations and Markov chains

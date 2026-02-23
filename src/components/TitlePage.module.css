@@ -8,6 +8,21 @@
   min-height: 60vh;
 }
 
+.logoWrap {
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.logo {
+  display: block;
+  height: 300px;
+  width: auto;
+  object-fit: contain;
+}
+
 .title {
   margin: 0;
   font-size: 2.25rem;
