@@ -7,9 +7,13 @@ import { BanditSection } from '@/components/BanditSection'
 import { LLNSection } from '@/components/LLNSection'
 import { CLTSection } from '@/components/CLTSection'
 import { RLSection } from '@/components/RLSection'
+import { LinearRegressionSection } from '@/components/LinearRegressionSection'
+import { LogisticRegressionSection } from '@/components/LogisticRegressionSection'
+import { KMeansSection } from '@/components/KMeansSection'
+import { KNNSection } from '@/components/KNNSection'
 import styles from './App.module.css'
 
-export type AppPage = 'home' | 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl'
+export type AppPage = 'home' | 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'knn'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -83,6 +87,34 @@ export default function App() {
               >
                 RL
               </button>
+              <button
+                type="button"
+                className={page === 'linear-regression' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('linear-regression')}
+              >
+                Linear regression
+              </button>
+              <button
+                type="button"
+                className={page === 'logistic-regression' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('logistic-regression')}
+              >
+                Logistic regression
+              </button>
+              <button
+                type="button"
+                className={page === 'kmeans' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('kmeans')}
+              >
+                K-Means
+              </button>
+              <button
+                type="button"
+                className={page === 'knn' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('knn')}
+              >
+                KNN
+              </button>
             </nav>
           </header>
           <main className={styles.main}>
@@ -93,6 +125,10 @@ export default function App() {
             {page === 'lln' && <LLNSection />}
             {page === 'clt' && <CLTSection />}
             {page === 'rl' && <RLSection />}
+            {page === 'linear-regression' && <LinearRegressionSection />}
+            {page === 'logistic-regression' && <LogisticRegressionSection />}
+            {page === 'kmeans' && <KMeansSection />}
+            {page === 'knn' && <KNNSection />}
           </main>
         </>
       )}

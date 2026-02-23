@@ -1,7 +1,7 @@
 import styles from './TitlePage.module.css'
 
 type Props = {
-  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl') => void
+  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'knn') => void
 }
 
 export function TitlePage({ onSelect }: Props) {
@@ -80,6 +80,46 @@ export function TitlePage({ onSelect }: Props) {
           <span className={styles.cardTitle}>Reinforcement Learning</span>
           <span className={styles.cardDesc}>
             MDPs and grid worlds: Value Iteration, Q-Learning, SARSA. Visualize policies and learning curves
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.card}
+          onClick={() => onSelect('linear-regression')}
+        >
+          <span className={styles.cardTitle}>Linear regression</span>
+          <span className={styles.cardDesc}>
+            OLS fit y = β₀ + β₁x. Paste data or generate synthetic; see scatter, fitted line, R² and residual SE
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.card}
+          onClick={() => onSelect('logistic-regression')}
+        >
+          <span className={styles.cardTitle}>Logistic regression</span>
+          <span className={styles.cardDesc}>
+            Binary classification: P(y=1|x) = σ(β₀ + β₁x). Paste x,y with y in {'{0,1}'} or generate synthetic; see sigmoid fit and loss
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.card}
+          onClick={() => onSelect('kmeans')}
+        >
+          <span className={styles.cardTitle}>K-Means</span>
+          <span className={styles.cardDesc}>
+            Cluster 2D points with K-Means. Generate blobs or random data, choose k, view clusters and centroids
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.card}
+          onClick={() => onSelect('knn')}
+        >
+          <span className={styles.cardTitle}>K-Nearest Neighbors</span>
+          <span className={styles.cardDesc}>
+            Classify points by majority vote among k nearest neighbors. Try blobs, XOR, and circles
           </span>
         </button>
       </div>
