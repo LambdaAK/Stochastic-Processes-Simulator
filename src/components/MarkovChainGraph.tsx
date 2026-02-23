@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import type { MarkovChainDef } from '@/types/markov'
 import styles from './MarkovChainGraph.module.css'
 
@@ -28,26 +28,85 @@ function mergeTransitions(transitions: { from: string; to: string; p: number }[]
   })
 }
 
+function getInitialLayout(states: string[], width: number, height: number): Map<string, { x: number; y: number }> {
+  const n = states.length
+  const cx = width / 2
+  const cy = height / 2
+  const radius = Math.min(width, height) / 2 - NODE_R - LABEL_OFFSET - 20
+  const angleStep = (2 * Math.PI) / Math.max(n, 1)
+  const startAngle = -Math.PI / 2
+  const nodePos = new Map<string, { x: number; y: number }>()
+  states.forEach((name, i) => {
+    const angle = startAngle + i * angleStep
+    nodePos.set(name, {
+      x: cx + radius * Math.cos(angle),
+      y: cy + radius * Math.sin(angle),
+    })
+  })
+  return nodePos
+}
+
 export function MarkovChainGraph({ chain, width = DEFAULT_SIZE, height = DEFAULT_SIZE }: Props) {
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [positions, setPositions] = useState<Record<string, { x: number; y: number }> | null>(null)
+  const [dragging, setDragging] = useState<{
+    node: string
+    startPos: { x: number; y: number }
+    startPointer: { x: number; y: number }
+  } | null>(null)
+
+  const statesKey = chain.states.join(',')
+  const initialLayout = useMemo(
+    () => getInitialLayout(chain.states, width, height),
+    [statesKey, width, height]
+  )
+
+  useEffect(() => {
+    setPositions(null)
+  }, [statesKey])
+
+  useEffect(() => {
+    if (!dragging || !svgRef.current) return
+    const svg = svgRef.current
+    const getSvgPoint = (evt: PointerEvent) => {
+      const pt = new DOMPoint(evt.clientX, evt.clientY)
+      const ctm = svg.getScreenCTM()
+      return ctm ? pt.matrixTransform(ctm.inverse()) : null
+    }
+    const onMove = (evt: PointerEvent) => {
+      evt.preventDefault()
+      const pt = getSvgPoint(evt)
+      if (!pt) return
+      const newX = dragging.startPos.x + (pt.x - dragging.startPointer.x)
+      const newY = dragging.startPos.y + (pt.y - dragging.startPointer.y)
+      setPositions((prev) => {
+        const base = prev ?? Object.fromEntries(initialLayout.entries())
+        return { ...base, [dragging.node]: { x: newX, y: newY } }
+      })
+    }
+    const onUp = () => setDragging(null)
+    window.addEventListener('pointermove', onMove, { capture: true })
+    window.addEventListener('pointerup', onUp, { capture: true })
+    window.addEventListener('pointercancel', onUp, { capture: true })
+    return () => {
+      window.removeEventListener('pointermove', onMove, { capture: true })
+      window.removeEventListener('pointerup', onUp, { capture: true })
+      window.removeEventListener('pointercancel', onUp, { capture: true })
+    }
+  }, [dragging, initialLayout])
+
+  const nodePos = useMemo(() => {
+    const map = new Map<string, { x: number; y: number }>()
+    chain.states.forEach((name) => {
+      const p = positions?.[name] ?? initialLayout.get(name)
+      if (p) map.set(name, p)
+    })
+    return map
+  }, [chain.states, positions, initialLayout])
+
   const { nodes, edges, selfLoops } = useMemo(() => {
     const { states, transitions } = chain
     const merged = mergeTransitions(transitions)
-    const n = states.length
-    const cx = width / 2
-    const cy = height / 2
-    const radius = Math.min(width, height) / 2 - NODE_R - LABEL_OFFSET - 20
-    const angleStep = (2 * Math.PI) / Math.max(n, 1)
-    const startAngle = -Math.PI / 2
-
-    const nodePos = new Map<string | number, { x: number; y: number }>()
-    states.forEach((name, i) => {
-      const angle = startAngle + i * angleStep
-      nodePos.set(name, {
-        x: cx + radius * Math.cos(angle),
-        y: cy + radius * Math.sin(angle),
-      })
-    })
-
     const edgeKeys = new Set(merged.map((t) => `${t.from}\t${t.to}`))
     const hasReverse = (from: string, to: string) => from !== to && edgeKeys.has(`${to}\t${from}`)
 
@@ -130,11 +189,25 @@ export function MarkovChainGraph({ chain, width = DEFAULT_SIZE, height = DEFAULT
       edges: edgesList,
       selfLoops: selfLoopsList,
     }
-  }, [chain, width, height])
+  }, [chain, nodePos, width, height])
+
+  const handlePointerDown = (nodeName: string, evt: React.PointerEvent) => {
+    evt.preventDefault()
+    const svg = svgRef.current
+    if (!svg) return
+    const pt = new DOMPoint(evt.clientX, evt.clientY)
+    const ctm = svg.getScreenCTM()
+    const svgPt = ctm ? pt.matrixTransform(ctm.inverse()) : null
+    if (!svgPt) return
+    const pos = nodePos.get(nodeName)
+    if (!pos) return
+    setDragging({ node: nodeName, startPos: pos, startPointer: { x: svgPt.x, y: svgPt.y } })
+  }
 
   return (
     <div className={styles.wrapper}>
       <svg
+        ref={svgRef}
         className={styles.svg}
         viewBox={`0 0 ${width} ${height}`}
         width="100%"
@@ -223,6 +296,8 @@ export function MarkovChainGraph({ chain, width = DEFAULT_SIZE, height = DEFAULT
               cy={node.y}
               r={NODE_R}
               className={styles.node}
+              style={{ cursor: dragging?.node === node.name ? 'grabbing' : 'grab' }}
+              onPointerDown={(e) => handlePointerDown(node.name, e)}
             />
             <text
               x={node.x}
@@ -230,6 +305,7 @@ export function MarkovChainGraph({ chain, width = DEFAULT_SIZE, height = DEFAULT
               className={styles.nodeLabel}
               textAnchor="middle"
               dominantBaseline="middle"
+              pointerEvents="none"
             >
               {node.name}
             </text>
