@@ -14,8 +14,6 @@ import {
 import {
   parseMarkovDSL,
   runSimulation,
-  isIrreducible,
-  isAperiodic,
   getStationaryDistribution,
   totalVariationDistance,
   computeDistributionOverTime,
@@ -206,51 +204,6 @@ export function MarkovChainSection() {
               </div>
             </div>
           )}
-
-          <div className={styles.propertiesBlock}>
-            <h3 className={styles.propertiesTitle}>Properties</h3>
-            <p className={styles.propertyLine}>
-              <strong>Irreducible:</strong>{' '}
-              {isIrreducible(chain) ? (
-                <span className={styles.propertyYes}>Yes</span>
-              ) : (
-                <span className={styles.propertyNo}>No</span>
-              )}
-            </p>
-            <p className={styles.propertyLine}>
-              <strong>Aperiodic:</strong>{' '}
-              {isAperiodic(chain) ? (
-                <span className={styles.propertyYes}>Yes</span>
-              ) : (
-                <span className={styles.propertyNo}>No</span>
-              )}
-            </p>
-            {(() => {
-              const irreducible = isIrreducible(chain)
-              const aperiodic = isAperiodic(chain)
-              const converges = irreducible && aperiodic
-              return (
-                <p className={styles.propertyLine}>
-                  <strong>Converges to stationary π:</strong>{' '}
-                  {converges ? (
-                    <span className={styles.propertyYes}>Yes</span>
-                  ) : (
-                    <span className={styles.propertyNo}>
-                      {!irreducible ? 'No (not irreducible)' : 'No (periodic)'}
-                    </span>
-                  )}
-                </p>
-              )
-            })()}
-            {stationaryDist && (
-              <p className={styles.propertyLine}>
-                <strong>Stationary distribution π:</strong>{' '}
-                <span className={styles.stationaryValues}>
-                  {chain.states.map((s) => `${s}: ${(stationaryDist[s] ?? 0).toFixed(4)}`).join(', ')}
-                </span>
-              </p>
-            )}
-          </div>
 
           <div className={styles.optionsBlock}>
             <h3 className={styles.optionsTitle}>What to do</h3>

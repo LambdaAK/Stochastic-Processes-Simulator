@@ -114,40 +114,6 @@
   box-shadow: var(--glass-shadow);
 }
 
-.propertiesBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 1.25rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
-}
-
-.propertiesTitle {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.propertyLine {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--text);
-}
-
-.propertyYes {
-  color: var(--success, #22c55e);
-}
-
-.propertyNo {
-  color: var(--text-muted);
-}
-
 .matrixTitle {
   margin: 0;
   font-size: 1rem;
@@ -244,11 +210,6 @@
   margin: 0.5rem 0 0;
   font-size: 0.85rem;
   color: var(--text-muted);
-}
-
-.stationaryValues {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
 }
 
 .theoreticalBlock {
