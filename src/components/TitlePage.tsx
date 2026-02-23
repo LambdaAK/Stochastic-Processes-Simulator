@@ -88,21 +88,6 @@ export function TitlePage({ onSelect }: Props) {
           </div>
         </section>
         <section className={styles.category}>
-          <h2 className={styles.categoryTitle}>Physics</h2>
-          <div className={styles.categoryCards}>
-            <button
-              type="button"
-              className={styles.card}
-              onClick={() => onSelect('pendulum')}
-            >
-              <span className={styles.cardTitle}>Pendulum</span>
-              <span className={styles.cardDesc}>
-                Simple and damped pendulum: θ″ = −(g/L) sin θ − b θ′. Phase portrait, time series, and animation
-              </span>
-            </button>
-          </div>
-        </section>
-        <section className={styles.category}>
           <h2 className={styles.categoryTitle}>ML</h2>
           <div className={styles.categoryCards}>
             <button
@@ -153,6 +138,21 @@ export function TitlePage({ onSelect }: Props) {
               <span className={styles.cardTitle}>K-Nearest Neighbors</span>
               <span className={styles.cardDesc}>
                 Classify points by majority vote among k nearest neighbors. Try blobs, XOR, and circles
+              </span>
+            </button>
+          </div>
+        </section>
+        <section className={styles.category}>
+          <h2 className={styles.categoryTitle}>Physics</h2>
+          <div className={styles.categoryCards}>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('pendulum')}
+            >
+              <span className={styles.cardTitle}>Pendulum</span>
+              <span className={styles.cardDesc}>
+                Simple and damped pendulum: θ″ = −(g/L) sin θ − b θ′. Phase portrait, time series, and animation
               </span>
             </button>
           </div>
