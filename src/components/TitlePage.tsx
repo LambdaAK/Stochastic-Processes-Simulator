@@ -1,7 +1,7 @@
 import styles from './TitlePage.module.css'
 
 type Props = {
-  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'knn') => void
+  onSelect: (section: 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'dbscan' | 'knn') => void
 }
 
 export function TitlePage({ onSelect }: Props) {
@@ -110,6 +110,16 @@ export function TitlePage({ onSelect }: Props) {
           <span className={styles.cardTitle}>K-Means</span>
           <span className={styles.cardDesc}>
             Cluster 2D points with K-Means. Generate blobs or random data, choose k, view clusters and centroids
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.card}
+          onClick={() => onSelect('dbscan')}
+        >
+          <span className={styles.cardTitle}>DBSCAN</span>
+          <span className={styles.cardDesc}>
+            Density-based clustering: set eps and minPts, no k needed. Finds clusters and labels outliers as noise
           </span>
         </button>
         <button

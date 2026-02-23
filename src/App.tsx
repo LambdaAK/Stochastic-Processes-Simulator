@@ -10,10 +10,11 @@ import { RLSection } from '@/components/RLSection'
 import { LinearRegressionSection } from '@/components/LinearRegressionSection'
 import { LogisticRegressionSection } from '@/components/LogisticRegressionSection'
 import { KMeansSection } from '@/components/KMeansSection'
+import { DBSCANSection } from '@/components/DBSCANSection'
 import { KNNSection } from '@/components/KNNSection'
 import styles from './App.module.css'
 
-export type AppPage = 'home' | 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'knn'
+export type AppPage = 'home' | 'stochastic-pde' | 'markov-chain' | 'ctmc' | 'bandit' | 'lln' | 'clt' | 'rl' | 'linear-regression' | 'logistic-regression' | 'kmeans' | 'dbscan' | 'knn'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -110,6 +111,13 @@ export default function App() {
               </button>
               <button
                 type="button"
+                className={page === 'dbscan' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('dbscan')}
+              >
+                DBSCAN
+              </button>
+              <button
+                type="button"
                 className={page === 'knn' ? styles.navBtnActive : styles.navBtn}
                 onClick={() => setPage('knn')}
               >
@@ -128,6 +136,7 @@ export default function App() {
             {page === 'linear-regression' && <LinearRegressionSection />}
             {page === 'logistic-regression' && <LogisticRegressionSection />}
             {page === 'kmeans' && <KMeansSection />}
+            {page === 'dbscan' && <DBSCANSection />}
             {page === 'knn' && <KNNSection />}
           </main>
         </>
