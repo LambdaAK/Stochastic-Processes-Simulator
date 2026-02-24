@@ -104,7 +104,7 @@ export function TitlePage({ onSelect }: Props) {
       <span className={styles.logoWrap}>
         <img src="/logo.png" alt="dX logo" className={styles.logo} />
       </span>
-      <h1 className={styles.title}>Math & ML Lab</h1>
+      <h1 className={styles.title}>Applied math & ML sandbox</h1>
       <div className={styles.searchWrap}>
         <input
           type="search"
