@@ -17,6 +17,7 @@ import { DecisionTreeSection } from '@/components/DecisionTreeSection'
 import { BaggingSection } from '@/components/BaggingSection'
 import { BoostingSection } from '@/components/BoostingSection'
 import { PCASection } from '@/components/PCASection'
+import { ConcentrationInequalitiesSection } from '@/components/ConcentrationInequalitiesSection'
 import { SimplexSection } from '@/components/SimplexSection'
 import { PerceptronSection } from '@/components/PerceptronSection'
 import { QPSection } from '@/components/QPSection'
@@ -45,6 +46,7 @@ export type AppPage =
   | 'bagging'
   | 'boosting'
   | 'pca'
+  | 'concentration-inequalities'
   | 'simplex'
   | 'perceptron'
   | 'qp'
@@ -213,6 +215,13 @@ export default function App() {
               </button>
               <button
                 type="button"
+                className={page === 'concentration-inequalities' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('concentration-inequalities')}
+              >
+                Concentration
+              </button>
+              <button
+                type="button"
                 className={page === 'simplex' ? styles.navBtnActive : styles.navBtn}
                 onClick={() => setPage('simplex')}
               >
@@ -260,6 +269,7 @@ export default function App() {
             {page === 'bagging' && <BaggingSection />}
             {page === 'boosting' && <BoostingSection />}
             {page === 'pca' && <PCASection />}
+            {page === 'concentration-inequalities' && <ConcentrationInequalitiesSection />}
             {page === 'simplex' && <SimplexSection />}
             {page === 'perceptron' && <PerceptronSection />}
             {page === 'qp' && <QPSection />}
