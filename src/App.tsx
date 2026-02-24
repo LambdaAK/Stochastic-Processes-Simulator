@@ -26,6 +26,8 @@ import { PerceptronSection } from '@/components/PerceptronSection'
 import { QPSection } from '@/components/QPSection'
 import { SVMSection } from '@/components/SVMSection'
 import { MatrixFactorizationsSection } from '@/components/MatrixFactorizationsSection'
+import { EigenvaluesSection } from '@/components/EigenvaluesSection'
+import { SolveLinearSection } from '@/components/SolveLinearSection'
 import styles from './App.module.css'
 
 function getInitialTheme(): 'light' | 'dark' {
@@ -60,6 +62,8 @@ export type AppPage =
   | 'heat-equation-1d'
   | 'heat-equation-3d'
   | 'matrix-factorizations'
+  | 'eigenvalues'
+  | 'solve-ax-b'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -139,6 +143,8 @@ export default function App() {
             {page === 'heat-equation-1d' && <HeatEquation1dSection />}
             {page === 'heat-equation-3d' && <HeatEquation3dSection />}
             {page === 'matrix-factorizations' && <MatrixFactorizationsSection />}
+            {page === 'eigenvalues' && <EigenvaluesSection />}
+            {page === 'solve-ax-b' && <SolveLinearSection />}
           </main>
         </>
       )}
