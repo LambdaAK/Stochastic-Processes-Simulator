@@ -16,6 +16,7 @@ import { KNNSection } from '@/components/KNNSection'
 import { DecisionTreeSection } from '@/components/DecisionTreeSection'
 import { BaggingSection } from '@/components/BaggingSection'
 import { BoostingSection } from '@/components/BoostingSection'
+import { PCASection } from '@/components/PCASection'
 import { SimplexSection } from '@/components/SimplexSection'
 import { PerceptronSection } from '@/components/PerceptronSection'
 import styles from './App.module.css'
@@ -38,6 +39,7 @@ export type AppPage =
   | 'decision-tree'
   | 'bagging'
   | 'boosting'
+  | 'pca'
   | 'simplex'
   | 'perceptron'
 
@@ -178,6 +180,13 @@ export default function App() {
               </button>
               <button
                 type="button"
+                className={page === 'pca' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('pca')}
+              >
+                PCA
+              </button>
+              <button
+                type="button"
                 className={page === 'simplex' ? styles.navBtnActive : styles.navBtn}
                 onClick={() => setPage('simplex')}
               >
@@ -209,6 +218,7 @@ export default function App() {
             {page === 'decision-tree' && <DecisionTreeSection />}
             {page === 'bagging' && <BaggingSection />}
             {page === 'boosting' && <BoostingSection />}
+            {page === 'pca' && <PCASection />}
             {page === 'simplex' && <SimplexSection />}
             {page === 'perceptron' && <PerceptronSection />}
           </main>
