@@ -21,6 +21,7 @@ type Props = {
       | 'boosting'
       | 'simplex'
       | 'perceptron'
+      | 'qp'
   ) => void
 }
 
@@ -214,6 +215,17 @@ export function TitlePage({ onSelect }: Props) {
               <span className={styles.cardDesc}>
                 Solve min/max c&#x1D40;x s.t. Ax ≤ b, x ≥ 0. Big-M method for ≥ and = constraints.
                 Visualise the feasible polytope and optimal vertex for 2-variable problems
+              </span>
+            </button>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('qp')}
+            >
+              <span className={styles.cardTitle}>Quadratic Program Solver</span>
+              <span className={styles.cardDesc}>
+                Solve min ½x&#x1D40;Qx + c&#x1D40;x s.t. Ax ≤ b, x ≥ 0. Active-set method with KKT conditions.
+                Visualise the feasible region and optimal point for 2-variable problems
               </span>
             </button>
           </div>

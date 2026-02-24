@@ -18,6 +18,7 @@ import { BaggingSection } from '@/components/BaggingSection'
 import { BoostingSection } from '@/components/BoostingSection'
 import { SimplexSection } from '@/components/SimplexSection'
 import { PerceptronSection } from '@/components/PerceptronSection'
+import { QPSection } from '@/components/QPSection'
 import styles from './App.module.css'
 
 export type AppPage =
@@ -40,6 +41,7 @@ export type AppPage =
   | 'boosting'
   | 'simplex'
   | 'perceptron'
+  | 'qp'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -190,6 +192,13 @@ export default function App() {
               >
                 Perceptron
               </button>
+              <button
+                type="button"
+                className={page === 'qp' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('qp')}
+              >
+                Quadratic Program
+              </button>
             </nav>
           </header>
           <main className={styles.main}>
@@ -211,6 +220,7 @@ export default function App() {
             {page === 'boosting' && <BoostingSection />}
             {page === 'simplex' && <SimplexSection />}
             {page === 'perceptron' && <PerceptronSection />}
+            {page === 'qp' && <QPSection />}
           </main>
         </>
       )}
