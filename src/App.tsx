@@ -16,6 +16,7 @@ import { KNNSection } from '@/components/KNNSection'
 import { DecisionTreeSection } from '@/components/DecisionTreeSection'
 import { BaggingSection } from '@/components/BaggingSection'
 import { BoostingSection } from '@/components/BoostingSection'
+import { PerceptronSection } from '@/components/PerceptronSection'
 import styles from './App.module.css'
 
 export type AppPage =
@@ -36,6 +37,7 @@ export type AppPage =
   | 'decision-tree'
   | 'bagging'
   | 'boosting'
+  | 'perceptron'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -172,6 +174,13 @@ export default function App() {
               >
                 Boosting
               </button>
+              <button
+                type="button"
+                className={page === 'perceptron' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('perceptron')}
+              >
+                Perceptron
+              </button>
             </nav>
           </header>
           <main className={styles.main}>
@@ -191,6 +200,7 @@ export default function App() {
             {page === 'decision-tree' && <DecisionTreeSection />}
             {page === 'bagging' && <BaggingSection />}
             {page === 'boosting' && <BoostingSection />}
+            {page === 'perceptron' && <PerceptronSection />}
           </main>
         </>
       )}

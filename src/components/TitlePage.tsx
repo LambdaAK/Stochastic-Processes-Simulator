@@ -19,6 +19,7 @@ type Props = {
       | 'decision-tree'
       | 'bagging'
       | 'boosting'
+      | 'perceptron'
   ) => void
 }
 
@@ -186,6 +187,16 @@ export function TitlePage({ onSelect }: Props) {
               <span className={styles.cardTitle}>Boosting (trees)</span>
               <span className={styles.cardDesc}>
                 Sequential ensemble of decision trees; each tree focuses on previous errors. AdaBoost-style weighted vote and decision boundary
+              </span>
+            </button>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('perceptron')}
+            >
+              <span className={styles.cardTitle}>Perceptron</span>
+              <span className={styles.cardDesc}>
+                The simplest linear classifier: ŷ = sign(w·x + b). Online weight updates, convergence theorem, 2D decision boundary
               </span>
             </button>
           </div>
