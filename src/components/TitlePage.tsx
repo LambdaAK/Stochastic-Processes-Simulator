@@ -27,6 +27,7 @@ export type SectionId =
   | 'heat-equation'
   | 'heat-equation-1d'
   | 'heat-equation-3d'
+  | 'matrix-factorizations'
 
 type Lab = { id: SectionId; category: string; title: string; description: string }
 
@@ -52,6 +53,7 @@ const LABS: Lab[] = [
   { id: 'concentration-inequalities', category: 'Probability', title: 'Concentration Inequalities', description: 'Markov, Chebyshev, Hoeffding; bounds vs empirical tails' },
   { id: 'simplex', category: 'Optimization', title: 'Linear Program Solver', description: 'Min cᵀx s.t. Ax≤b; Big-M; 2D feasible polytope' },
   { id: 'qp', category: 'Optimization', title: 'Quadratic Program Solver', description: 'Min ½xᵀQx+cᵀx s.t. Ax≤b; active-set; 2D region' },
+  { id: 'matrix-factorizations', category: 'Math', title: 'Matrix factorizations', description: 'LU, QR, Cholesky, SVD; factors and solve Ax = b' },
   { id: 'pendulum', category: 'Physics', title: 'Pendulum', description: 'Phase portrait, time series, and animation' },
   { id: 'heat-equation-1d', category: 'Physics', title: '1D Heat Equation', description: '∂u/∂t = α∂²u/∂x²; graph u(x) over time' },
   { id: 'heat-equation', category: 'Physics', title: '2D Heat Equation', description: '∂u/∂t = α∇²u; finite-difference solver and heat map' },
@@ -83,7 +85,7 @@ export function TitlePage({ onSelect }: Props) {
       list.push(lab)
       map.set(lab.category, list)
     }
-    const order = ['Probability', 'Stochastic processes', 'Regression & classification', 'Clustering & dimensionality', 'Reinforcement learning', 'Optimization', 'Physics']
+    const order = ['Math', 'Probability', 'Stochastic processes', 'Regression & classification', 'Clustering & dimensionality', 'Reinforcement learning', 'Optimization', 'Physics']
     return order.filter((c) => map.has(c)).map((c) => ({ category: c, labs: map.get(c)! }))
   }, [query])
 
