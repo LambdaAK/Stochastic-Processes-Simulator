@@ -18,7 +18,14 @@ import { BaggingSection } from '@/components/BaggingSection'
 import { BoostingSection } from '@/components/BoostingSection'
 import { PCASection } from '@/components/PCASection'
 import { ConcentrationInequalitiesSection } from '@/components/ConcentrationInequalitiesSection'
+import { SimplexSection } from '@/components/SimplexSection'
+import { PerceptronSection } from '@/components/PerceptronSection'
+import { QPSection } from '@/components/QPSection'
 import styles from './App.module.css'
+
+function getInitialTheme(): 'light' | 'dark' {
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
+}
 
 export type AppPage =
   | 'home'
@@ -40,14 +47,37 @@ export type AppPage =
   | 'boosting'
   | 'pca'
   | 'concentration-inequalities'
+  | 'simplex'
+  | 'perceptron'
+  | 'qp'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
+  const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme)
+
+  function toggleTheme() {
+    const next = theme === 'dark' ? 'light' : 'dark'
+    setTheme(next)
+    if (next === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark')
+    } else {
+      document.documentElement.removeAttribute('data-theme')
+    }
+    localStorage.setItem('theme', next)
+  }
 
   return (
     <div className={styles.app}>
       {page === 'home' ? (
         <>
+          <button
+            type="button"
+            className={styles.themeToggleFixed}
+            onClick={toggleTheme}
+            aria-label="Toggle dark mode"
+          >
+            {theme === 'dark' ? '☀' : '🌙'}
+          </button>
           <main className={styles.mainHome}>
             <TitlePage onSelect={setPage} />
           </main>
@@ -190,7 +220,36 @@ export default function App() {
               >
                 Concentration
               </button>
+              <button
+                type="button"
+                className={page === 'simplex' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('simplex')}
+              >
+                Linear Program Solver
+              </button>
+              <button
+                type="button"
+                className={page === 'perceptron' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('perceptron')}
+              >
+                Perceptron
+              </button>
+              <button
+                type="button"
+                className={page === 'qp' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('qp')}
+              >
+                Quadratic Program
+              </button>
             </nav>
+            <button
+              type="button"
+              className={styles.themeToggle}
+              onClick={toggleTheme}
+              aria-label="Toggle dark mode"
+            >
+              {theme === 'dark' ? '☀' : '🌙'}
+            </button>
           </header>
           <main className={styles.main}>
             {page === 'stochastic-pde' && <StochasticPdeSection />}
@@ -211,6 +270,9 @@ export default function App() {
             {page === 'boosting' && <BoostingSection />}
             {page === 'pca' && <PCASection />}
             {page === 'concentration-inequalities' && <ConcentrationInequalitiesSection />}
+            {page === 'simplex' && <SimplexSection />}
+            {page === 'perceptron' && <PerceptronSection />}
+            {page === 'qp' && <QPSection />}
           </main>
         </>
       )}

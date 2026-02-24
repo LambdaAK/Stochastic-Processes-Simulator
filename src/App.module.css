@@ -88,3 +88,41 @@
   color: var(--text-muted);
   text-align: center;
 }
+
+.themeToggle {
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.themeToggle:hover {
+  border-color: var(--accent);
+}
+
+.themeToggleFixed {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--glass-shadow);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.themeToggleFixed:hover {
+  border-color: var(--accent);
+}
