@@ -105,6 +105,8 @@ export function HeatEquationSection() {
   const [playing, setPlaying] = useState(false)
   const rafRef = useRef<number | null>(null)
   const lastTickRef = useRef(0)
+  const accumulatedRef = useRef(0)
+  const STEPS_PER_SECOND = 20
 
   const runSimulation = useCallback(() => {
     const config: HeatConfig = { N, alpha, dt, T, initial }
@@ -122,16 +124,25 @@ export function HeatEquationSection() {
 
   useEffect(() => {
     if (!result || !playing || numSnapshots <= 1) return
+    accumulatedRef.current = 0
 
     const animate = (now: number) => {
       const elapsed = (now - lastTickRef.current) / 1000
       lastTickRef.current = now
-      setSnapshotIndex((prev) => {
-        const step = Math.max(1, Math.floor(elapsed * 15))
-        const next = Math.min(prev + step, numSnapshots - 1)
-        if (next >= numSnapshots - 1) setPlaying(false)
-        return next
-      })
+      accumulatedRef.current += elapsed
+      const timePerStep = 1 / STEPS_PER_SECOND
+      let steps = 0
+      while (accumulatedRef.current >= timePerStep && steps < numSnapshots) {
+        accumulatedRef.current -= timePerStep
+        steps += 1
+      }
+      if (steps > 0) {
+        setSnapshotIndex((prev) => {
+          const next = Math.min(prev + steps, numSnapshots - 1)
+          if (next >= numSnapshots - 1) setPlaying(false)
+          return next
+        })
+      }
       rafRef.current = requestAnimationFrame(animate)
     }
     lastTickRef.current = performance.now()
