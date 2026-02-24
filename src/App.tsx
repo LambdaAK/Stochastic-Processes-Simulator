@@ -19,6 +19,7 @@ import { BoostingSection } from '@/components/BoostingSection'
 import { PCASection } from '@/components/PCASection'
 import { SimplexSection } from '@/components/SimplexSection'
 import { PerceptronSection } from '@/components/PerceptronSection'
+import { QPSection } from '@/components/QPSection'
 import styles from './App.module.css'
 
 function getInitialTheme(): 'light' | 'dark' {
@@ -46,6 +47,7 @@ export type AppPage =
   | 'pca'
   | 'simplex'
   | 'perceptron'
+  | 'qp'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -223,6 +225,13 @@ export default function App() {
               >
                 Perceptron
               </button>
+              <button
+                type="button"
+                className={page === 'qp' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('qp')}
+              >
+                Quadratic Program
+              </button>
             </nav>
             <button
               type="button"
@@ -253,6 +262,7 @@ export default function App() {
             {page === 'pca' && <PCASection />}
             {page === 'simplex' && <SimplexSection />}
             {page === 'perceptron' && <PerceptronSection />}
+            {page === 'qp' && <QPSection />}
           </main>
         </>
       )}
