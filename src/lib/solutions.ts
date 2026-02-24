@@ -67,6 +67,36 @@ function gbmSolution(
   }
 }
 
+function cirSolution(
+  t: number[],
+  x0: number,
+  kappa: number,
+  theta: number,
+  sigma: number
+): TheoreticalSolution {
+  const mean = t.map((s) => theta + (x0 - theta) * Math.exp(-kappa * s))
+  const variance = t.map((s) => {
+    const ekt = Math.exp(-kappa * s)
+    return (
+      x0 * (sigma * sigma / kappa) * (ekt - ekt * ekt) +
+      theta * (sigma * sigma / (2 * kappa)) * (1 - ekt) * (1 - ekt)
+    )
+  })
+  const std = variance.map((v) => Math.sqrt(Math.max(v, 0)))
+  return {
+    t,
+    mean,
+    std,
+    formulaLatex:
+      'E[X_t] = \\theta + (X_0 - \\theta)e^{-\\kappa t}, \\quad ' +
+      '\\mathrm{Var}(X_t) = \\frac{X_0 \\sigma^2}{\\kappa}\\bigl(e^{-\\kappa t} - e^{-2\\kappa t}\\bigr) ' +
+      '+ \\frac{\\theta\\sigma^2}{2\\kappa}\\bigl(1 - e^{-\\kappa t}\\bigr)^2',
+    stationaryLatex:
+      '\\text{As } t \\to \\infty: \\quad X_\\infty \\sim \\mathrm{Gamma}\\!\\left(\\frac{2\\kappa\\theta}{\\sigma^2},\\, \\frac{2\\kappa}{\\sigma^2}\\right), \\quad ' +
+      'E[X_\\infty] = \\theta, \\quad \\mathrm{Var}(X_\\infty) = \\frac{\\theta\\sigma^2}{2\\kappa}',
+  }
+}
+
 /**
  * Get theoretical mean and std for a process on the given time grid, or null if no closed form.
  */
@@ -84,6 +114,8 @@ export function getTheoreticalSolution(
       return ouSolution(t, x0, params.theta, params.mu, params.sigma)
     case 'geometric-brownian':
       return gbmSolution(t, x0, params.mu, params.sigma)
+    case 'cir':
+      return cirSolution(t, x0, params.kappa, params.theta, params.sigma)
     default:
       return null
   }
