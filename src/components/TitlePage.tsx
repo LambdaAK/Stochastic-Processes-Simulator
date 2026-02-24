@@ -19,6 +19,7 @@ type Props = {
       | 'decision-tree'
       | 'bagging'
       | 'boosting'
+      | 'pca'
       | 'simplex'
       | 'perceptron'
       | 'qp'
@@ -199,6 +200,16 @@ export function TitlePage({ onSelect }: Props) {
               <span className={styles.cardTitle}>Perceptron</span>
               <span className={styles.cardDesc}>
                 The simplest linear classifier: ŷ = sign(w·x + b). Online weight updates, convergence theorem, 2D decision boundary
+              </span>
+            </button>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('pca')}
+            >
+              <span className={styles.cardTitle}>PCA</span>
+              <span className={styles.cardDesc}>
+                Principal Component Analysis: reduce ℝⁿ → ℝ² via covariance eigendecomposition, visualise projection, and reconstruct with MSE
               </span>
             </button>
           </div>

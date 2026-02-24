@@ -23,6 +23,52 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+[data-theme="dark"] {
+  --bg: #1e2738;
+  --bg-elevated: #2a3447;
+  --bg-input: rgba(42, 52, 71, 0.85);
+  --border: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent: #f97316;
+  --accent-dim: #ea580c;
+  --accent-soft: rgba(249, 115, 22, 0.15);
+  --on-accent: #ffffff;
+  --danger: #ef4444;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --glass-bg: rgba(30, 39, 56, 0.72);
+  --glass-bg-strong: rgba(30, 39, 56, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 0, 0, 0.12);
+  --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.32);
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(165deg, #1e2738 0%, #222d3f 45%, #1a2435 100%);
+  background-attachment: fixed;
+}
+
+/* Recharts dark mode overrides */
+[data-theme="dark"] .recharts-cartesian-grid-horizontal line,
+[data-theme="dark"] .recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .recharts-text {
+  fill: #94a3b8;
+}
+
+[data-theme="dark"] .recharts-default-tooltip {
+  background-color: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .recharts-tooltip-item {
+  color: #f1f5f9 !important;
+}
+
 * {
   box-sizing: border-box;
 }
