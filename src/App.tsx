@@ -16,6 +16,9 @@ import { KNNSection } from '@/components/KNNSection'
 import { DecisionTreeSection } from '@/components/DecisionTreeSection'
 import { BaggingSection } from '@/components/BaggingSection'
 import { BoostingSection } from '@/components/BoostingSection'
+import { PCASection } from '@/components/PCASection'
+import { SimplexSection } from '@/components/SimplexSection'
+import { PerceptronSection } from '@/components/PerceptronSection'
 import styles from './App.module.css'
 
 function getInitialTheme(): 'light' | 'dark' {
@@ -40,6 +43,9 @@ export type AppPage =
   | 'decision-tree'
   | 'bagging'
   | 'boosting'
+  | 'pca'
+  | 'simplex'
+  | 'perceptron'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -196,6 +202,27 @@ export default function App() {
               >
                 Boosting
               </button>
+              <button
+                type="button"
+                className={page === 'pca' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('pca')}
+              >
+                PCA
+              </button>
+              <button
+                type="button"
+                className={page === 'simplex' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('simplex')}
+              >
+                Linear Program Solver
+              </button>
+              <button
+                type="button"
+                className={page === 'perceptron' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('perceptron')}
+              >
+                Perceptron
+              </button>
             </nav>
             <button
               type="button"
@@ -223,6 +250,9 @@ export default function App() {
             {page === 'decision-tree' && <DecisionTreeSection />}
             {page === 'bagging' && <BaggingSection />}
             {page === 'boosting' && <BoostingSection />}
+            {page === 'pca' && <PCASection />}
+            {page === 'simplex' && <SimplexSection />}
+            {page === 'perceptron' && <PerceptronSection />}
           </main>
         </>
       )}
