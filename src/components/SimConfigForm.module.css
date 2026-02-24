@@ -70,3 +70,17 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1rem 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .runButton {
+    width: 100%;
+  }
+}

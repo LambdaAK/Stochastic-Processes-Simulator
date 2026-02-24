@@ -50,6 +50,12 @@ export type AppPage =
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
   const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme)
+  const [navOpen, setNavOpen] = useState(false)
+
+  function navigate(p: AppPage) {
+    setPage(p)
+    setNavOpen(false)
+  }
 
   function toggleTheme() {
     const next = theme === 'dark' ? 'light' : 'dark'
@@ -80,146 +86,164 @@ export default function App() {
         </>
       ) : (
         <>
+          {navOpen && (
+            <div
+              className={styles.navOverlay}
+              onClick={() => setNavOpen(false)}
+              aria-hidden="true"
+            />
+          )}
           <header className={styles.header}>
             <button
               type="button"
               className={styles.titleLink}
-              onClick={() => setPage('home')}
+              onClick={() => { setPage('home'); setNavOpen(false) }}
               aria-label="Home"
             >
               <img src="/logo.png" alt="dX" className={styles.headerLogo} />
             </button>
-            <nav className={styles.nav} aria-label="Main">
+            <button
+              type="button"
+              className={styles.hamburger}
+              onClick={() => setNavOpen(o => !o)}
+              aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
+              aria-expanded={navOpen}
+            >
+              <span className={navOpen ? styles.barTop : ''} />
+              <span className={navOpen ? styles.barMid : ''} />
+              <span className={navOpen ? styles.barBot : ''} />
+            </button>
+            <nav className={`${styles.nav} ${navOpen ? styles.navOpen : ''}`} aria-label="Main">
               <button
                 type="button"
                 className={page === 'stochastic-pde' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('stochastic-pde')}
+                onClick={() => navigate('stochastic-pde')}
               >
                 Stochastic PDE
               </button>
               <button
                 type="button"
                 className={page === 'markov-chain' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('markov-chain')}
+                onClick={() => navigate('markov-chain')}
               >
                 Markov Chain
               </button>
               <button
                 type="button"
                 className={page === 'ctmc' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('ctmc')}
+                onClick={() => navigate('ctmc')}
               >
                 CTMC
               </button>
               <button
                 type="button"
                 className={page === 'bandit' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('bandit')}
+                onClick={() => navigate('bandit')}
               >
                 Bandits
               </button>
               <button
                 type="button"
                 className={page === 'lln' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('lln')}
+                onClick={() => navigate('lln')}
               >
                 LLN
               </button>
               <button
                 type="button"
                 className={page === 'clt' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('clt')}
+                onClick={() => navigate('clt')}
               >
                 CLT
               </button>
               <button
                 type="button"
                 className={page === 'rl' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('rl')}
+                onClick={() => navigate('rl')}
               >
                 RL
               </button>
               <button
                 type="button"
                 className={page === 'pendulum' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('pendulum')}
+                onClick={() => navigate('pendulum')}
               >
                 Pendulum
               </button>
               <button
                 type="button"
                 className={page === 'linear-regression' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('linear-regression')}
+                onClick={() => navigate('linear-regression')}
               >
                 Linear regression
               </button>
               <button
                 type="button"
                 className={page === 'logistic-regression' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('logistic-regression')}
+                onClick={() => navigate('logistic-regression')}
               >
                 Logistic regression
               </button>
               <button
                 type="button"
                 className={page === 'kmeans' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('kmeans')}
+                onClick={() => navigate('kmeans')}
               >
                 K-Means
               </button>
               <button
                 type="button"
                 className={page === 'dbscan' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('dbscan')}
+                onClick={() => navigate('dbscan')}
               >
                 DBSCAN
               </button>
               <button
                 type="button"
                 className={page === 'knn' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('knn')}
+                onClick={() => navigate('knn')}
               >
                 KNN
               </button>
               <button
                 type="button"
                 className={page === 'decision-tree' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('decision-tree')}
+                onClick={() => navigate('decision-tree')}
               >
                 Decision tree
               </button>
               <button
                 type="button"
                 className={page === 'bagging' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('bagging')}
+                onClick={() => navigate('bagging')}
               >
                 Bagging
               </button>
               <button
                 type="button"
                 className={page === 'boosting' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('boosting')}
+                onClick={() => navigate('boosting')}
               >
                 Boosting
               </button>
               <button
                 type="button"
                 className={page === 'pca' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('pca')}
+                onClick={() => navigate('pca')}
               >
                 PCA
               </button>
               <button
                 type="button"
                 className={page === 'simplex' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('simplex')}
+                onClick={() => navigate('simplex')}
               >
                 Linear Program Solver
               </button>
               <button
                 type="button"
                 className={page === 'perceptron' ? styles.navBtnActive : styles.navBtn}
-                onClick={() => setPage('perceptron')}
+                onClick={() => navigate('perceptron')}
               >
                 Perceptron
               </button>

@@ -198,3 +198,28 @@
   min-width: 0;
   accent-color: var(--accent);
 }
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1rem;
+  }
+
+  .cards {
+    gap: 0.5rem;
+  }
+
+  .paramRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .paramName {
+    flex: none;
+    width: 100%;
+  }
+
+  .slider {
+    width: 100%;
+  }
+}
