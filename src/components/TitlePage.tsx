@@ -26,6 +26,7 @@ export type SectionId =
   | 'svm'
   | 'heat-equation'
   | 'heat-equation-1d'
+  | 'heat-equation-3d'
 
 type Lab = { id: SectionId; category: string; title: string; description: string }
 
@@ -54,6 +55,7 @@ const LABS: Lab[] = [
   { id: 'pendulum', category: 'Physics', title: 'Pendulum', description: 'Phase portrait, time series, and animation' },
   { id: 'heat-equation', category: 'Physics', title: '2D Heat Equation', description: '∂u/∂t = α∇²u; finite-difference solver and heat map' },
   { id: 'heat-equation-1d', category: 'Physics', title: '1D Heat Equation', description: '∂u/∂t = α∂²u/∂x²; graph u(x) over time' },
+  { id: 'heat-equation-3d', category: 'Physics', title: '3D Heat Equation', description: '∂u/∂t = α∇²u; 3D view, rotate and zoom' },
 ]
 
 type Props = {
