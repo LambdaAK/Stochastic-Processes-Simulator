@@ -23,6 +23,7 @@ export type SectionId =
   | 'simplex'
   | 'perceptron'
   | 'qp'
+  | 'svm'
 
 type Lab = { id: SectionId; category: string; title: string; description: string }
 
@@ -43,6 +44,7 @@ const LABS: Lab[] = [
   { id: 'bagging', category: 'Regression & classification', title: 'Bagging (trees)', description: 'Bootstrap ensemble of trees; compare to single tree' },
   { id: 'boosting', category: 'Regression & classification', title: 'Boosting (trees)', description: 'Sequential trees on errors; AdaBoost-style boundary' },
   { id: 'perceptron', category: 'Regression & classification', title: 'Perceptron', description: 'Linear classifier ŷ = sign(w·x+b); 2D boundary' },
+  { id: 'svm', category: 'Regression & classification', title: 'SVM', description: 'Max-margin linear classifier; hard & soft margin; support vectors' },
   { id: 'pca', category: 'Clustering & dimensionality', title: 'PCA', description: 'ℝⁿ→ℝ² via eigenvectors; projection and reconstruction' },
   { id: 'concentration-inequalities', category: 'Probability', title: 'Concentration Inequalities', description: 'Markov, Chebyshev, Hoeffding; bounds vs empirical tails' },
   { id: 'simplex', category: 'Optimization', title: 'Linear Program Solver', description: 'Min cᵀx s.t. Ax≤b; Big-M; 2D feasible polytope' },

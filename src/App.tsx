@@ -21,6 +21,7 @@ import { ConcentrationInequalitiesSection } from '@/components/ConcentrationIneq
 import { SimplexSection } from '@/components/SimplexSection'
 import { PerceptronSection } from '@/components/PerceptronSection'
 import { QPSection } from '@/components/QPSection'
+import { SVMSection } from '@/components/SVMSection'
 import styles from './App.module.css'
 
 function getInitialTheme(): 'light' | 'dark' {
@@ -50,14 +51,11 @@ export type AppPage =
   | 'simplex'
   | 'perceptron'
   | 'qp'
+  | 'svm'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
   const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme)
-
-  function navigate(p: AppPage) {
-    setPage(p)
-  }
 
   function toggleTheme() {
     const next = theme === 'dark' ? 'light' : 'dark'
@@ -128,6 +126,7 @@ export default function App() {
             {page === 'simplex' && <SimplexSection />}
             {page === 'perceptron' && <PerceptronSection />}
             {page === 'qp' && <QPSection />}
+            {page === 'svm' && <SVMSection />}
           </main>
         </>
       )}
