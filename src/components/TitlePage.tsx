@@ -19,6 +19,7 @@ type Props = {
       | 'decision-tree'
       | 'bagging'
       | 'boosting'
+      | 'simplex'
       | 'perceptron'
   ) => void
 }
@@ -197,6 +198,22 @@ export function TitlePage({ onSelect }: Props) {
               <span className={styles.cardTitle}>Perceptron</span>
               <span className={styles.cardDesc}>
                 The simplest linear classifier: ŷ = sign(w·x + b). Online weight updates, convergence theorem, 2D decision boundary
+              </span>
+            </button>
+          </div>
+        </section>
+        <section className={styles.category}>
+          <h2 className={styles.categoryTitle}>Optimization</h2>
+          <div className={styles.categoryCards}>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('simplex')}
+            >
+              <span className={styles.cardTitle}>Linear Program Solver</span>
+              <span className={styles.cardDesc}>
+                Solve min/max c&#x1D40;x s.t. Ax ≤ b, x ≥ 0. Big-M method for ≥ and = constraints.
+                Visualise the feasible polytope and optimal vertex for 2-variable problems
               </span>
             </button>
           </div>
