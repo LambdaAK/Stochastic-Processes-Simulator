@@ -17,6 +17,7 @@ import { DecisionTreeSection } from '@/components/DecisionTreeSection'
 import { BaggingSection } from '@/components/BaggingSection'
 import { BoostingSection } from '@/components/BoostingSection'
 import { PCASection } from '@/components/PCASection'
+import { ConcentrationInequalitiesSection } from '@/components/ConcentrationInequalitiesSection'
 import styles from './App.module.css'
 
 export type AppPage =
@@ -38,6 +39,7 @@ export type AppPage =
   | 'bagging'
   | 'boosting'
   | 'pca'
+  | 'concentration-inequalities'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -181,6 +183,13 @@ export default function App() {
               >
                 PCA
               </button>
+              <button
+                type="button"
+                className={page === 'concentration-inequalities' ? styles.navBtnActive : styles.navBtn}
+                onClick={() => setPage('concentration-inequalities')}
+              >
+                Concentration
+              </button>
             </nav>
           </header>
           <main className={styles.main}>
@@ -201,6 +210,7 @@ export default function App() {
             {page === 'bagging' && <BaggingSection />}
             {page === 'boosting' && <BoostingSection />}
             {page === 'pca' && <PCASection />}
+            {page === 'concentration-inequalities' && <ConcentrationInequalitiesSection />}
           </main>
         </>
       )}

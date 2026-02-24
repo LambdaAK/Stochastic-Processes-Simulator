@@ -20,6 +20,7 @@ type Props = {
       | 'bagging'
       | 'boosting'
       | 'pca'
+      | 'concentration-inequalities'
   ) => void
 }
 
@@ -197,6 +198,16 @@ export function TitlePage({ onSelect }: Props) {
               <span className={styles.cardTitle}>PCA</span>
               <span className={styles.cardDesc}>
                 Principal Component Analysis: reduce ℝⁿ → ℝ² via covariance eigendecomposition, visualise projection, and reconstruct with MSE
+              </span>
+            </button>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onSelect('concentration-inequalities')}
+            >
+              <span className={styles.cardTitle}>Concentration Inequalities</span>
+              <span className={styles.cardDesc}>
+                Markov, Chebyshev, Hoeffding, and Sub-Gaussian bounds: see theoretical bounds vs empirical tail probabilities
               </span>
             </button>
           </div>
