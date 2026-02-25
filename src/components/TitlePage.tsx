@@ -32,6 +32,7 @@ export type SectionId =
   | 'solve-ax-b'
   | 'matrix-inverse'
   | 'gradient-descent'
+  | 'duality'
 
 type Lab = { id: SectionId; category: string; title: string; description: string }
 
@@ -58,6 +59,7 @@ const LABS: Lab[] = [
   { id: 'simplex', category: 'Optimization', title: 'Linear Program Solver', description: 'Min cᵀx s.t. Ax≤b; Big-M; 2D feasible polytope' },
   { id: 'qp', category: 'Optimization', title: 'Quadratic Program Solver', description: 'Min ½xᵀQx+cᵀx s.t. Ax≤b; active-set; 2D region' },
   { id: 'gradient-descent', category: 'Optimization', title: 'Gradient descent', description: '1D: f(x) graph with GD path; quadratic, quartic, sinusoidal; step size, momentum' },
+  { id: 'duality', category: 'Optimization', title: 'Duality lab', description: 'Enter an LP (min c′x s.t. Ax ≥ b); see the dual problem' },
   { id: 'matrix-factorizations', category: 'Linear algebra', title: 'Matrix factorizations', description: 'LU, QR, Cholesky, SVD; factors and solve Ax = b' },
   { id: 'eigenvalues', category: 'Linear algebra', title: 'Eigenvalues & eigenvectors', description: '2×2 matrix; λ, v; unit circle → ellipse and eigenvector arrows' },
   { id: 'solve-ax-b', category: 'Linear algebra', title: 'Solve Ax = b', description: 'Linear system solver via RREF; solution, residual; 2D lines for 2×2' },

@@ -30,6 +30,7 @@ import { EigenvaluesSection } from '@/components/EigenvaluesSection'
 import { SolveLinearSection } from '@/components/SolveLinearSection'
 import { MatrixInverseSection } from '@/components/MatrixInverseSection'
 import { GradientDescentSection } from '@/components/GradientDescentSection'
+import { DualitySection } from '@/components/DualitySection'
 import styles from './App.module.css'
 
 function getInitialTheme(): 'light' | 'dark' {
@@ -68,6 +69,7 @@ export type AppPage =
   | 'solve-ax-b'
   | 'matrix-inverse'
   | 'gradient-descent'
+  | 'duality'
 
 export default function App() {
   const [page, setPage] = useState<AppPage>('home')
@@ -151,6 +153,7 @@ export default function App() {
             {page === 'solve-ax-b' && <SolveLinearSection />}
             {page === 'matrix-inverse' && <MatrixInverseSection />}
             {page === 'gradient-descent' && <GradientDescentSection />}
+            {page === 'duality' && <DualitySection />}
           </main>
         </>
       )}
