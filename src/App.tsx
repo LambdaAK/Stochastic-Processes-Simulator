@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { TitlePage } from '@/components/TitlePage'
 import { StochasticPdeSection } from '@/components/StochasticPdeSection'
 import { MarkovChainSection } from '@/components/MarkovChainSection'
@@ -71,9 +71,82 @@ export type AppPage =
   | 'gradient-descent'
   | 'duality'
 
+const LAB_PATH_PREFIX = '/lab/'
+
+function pathToPage(pathname: string): AppPage {
+  if (!pathname || pathname === '/') return 'home'
+  if (pathname.startsWith(LAB_PATH_PREFIX)) {
+    const id = pathname.slice(LAB_PATH_PREFIX.length).replace(/\/+$/, '')
+    const validLabIds: Exclude<AppPage, 'home'>[] = [
+      'stochastic-pde',
+      'markov-chain',
+      'ctmc',
+      'bandit',
+      'lln',
+      'clt',
+      'rl',
+      'pendulum',
+      'linear-regression',
+      'logistic-regression',
+      'kmeans',
+      'dbscan',
+      'knn',
+      'decision-tree',
+      'bagging',
+      'boosting',
+      'pca',
+      'concentration-inequalities',
+      'simplex',
+      'perceptron',
+      'qp',
+      'svm',
+      'heat-equation',
+      'heat-equation-1d',
+      'heat-equation-3d',
+      'matrix-factorizations',
+      'eigenvalues',
+      'solve-ax-b',
+      'matrix-inverse',
+      'gradient-descent',
+      'duality',
+    ]
+    if (validLabIds.includes(id as Exclude<AppPage, 'home'>)) {
+      return id as AppPage
+    }
+  }
+  return 'home'
+}
+
+function pageToPath(page: AppPage): string {
+  if (page === 'home') return '/'
+  return `${LAB_PATH_PREFIX}${page}`
+}
+
 export default function App() {
-  const [page, setPage] = useState<AppPage>('home')
+  const [page, setPage] = useState<AppPage>(() => pathToPage(window.location.pathname))
   const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme)
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setPage(pathToPage(window.location.pathname))
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [])
+
+  const navigate = useMemo(
+    () =>
+      (next: AppPage) => {
+        const nextPath = pageToPath(next)
+        if (window.location.pathname !== nextPath) {
+          window.history.pushState({ page: next }, '', nextPath)
+        }
+        setPage(next)
+      },
+    []
+  )
 
   function toggleTheme() {
     const next = theme === 'dark' ? 'light' : 'dark'
@@ -99,7 +172,7 @@ export default function App() {
             {theme === 'dark' ? '☀' : '🌙'}
           </button>
           <main className={styles.mainHome}>
-            <TitlePage onSelect={setPage} />
+            <TitlePage onSelect={navigate} />
           </main>
         </>
       ) : (
@@ -108,7 +181,7 @@ export default function App() {
             <button
               type="button"
               className={styles.titleLink}
-              onClick={() => setPage('home')}
+              onClick={() => navigate('home')}
               aria-label="Home"
             >
               <img src="/logo.png" alt="dX" className={styles.headerLogo} />
